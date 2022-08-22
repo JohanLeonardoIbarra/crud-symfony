@@ -10,6 +10,7 @@
         "ext-mongodb": "*",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/mongodb-odm": "^2.4",
         "doctrine/mongodb-odm-bundle": "^4.5",
         "doctrine/orm": "^2.13",
         "sensio/framework-extra-bundle": "^6.2",
