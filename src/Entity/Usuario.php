@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\UsuarioRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
+#[UniqueEntity("email")]
 class Usuario
 {
     #[ORM\Id]
@@ -14,15 +17,23 @@ class Usuario
     private ?int $id = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotNull]
+    #[Assert\Regex('/\d/', 'Your name cannot contain a number',null,false)]
     private ?string $nombre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotNull]
+    #[Assert\Regex('/\d/', 'Your surname cannot contain a number',null,false)]
     private ?string $apellido = null;
 
     #[ORM\Column(length: 255, nullable: false, unique: true)]
+    #[Assert\NotNull]
+    #[Assert\Email]
     private ?string $email = null;
 
     #[ORM\Column(type:"string", columnDefinition:"ENUM('hombre', 'mujer')")]
+    #[Assert\NotNull]
+    #[Assert\Choice(choices: ["Hombre", "Mujer"])]
     private ?string $sexo = null;
 
     public function getId(): ?int

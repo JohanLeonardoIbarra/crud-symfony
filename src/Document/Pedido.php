@@ -3,23 +3,28 @@
 namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/** @ODM\Document */
-class User
+#[ODM\Document]
+class Pedido
 {
-    /** @ODM\Id */
+    #[ODM\Id]
     private $id;
 
-    /** @ODM\Field(type="string") */
+    #[ODM\Field(type: "string")]
+    #[Assert\NotBlank]
     private $user_id;
 
-    /** @ODM\Field(type="string") */
+    #[ODM\Field(type: "int")]
+    #[Assert\NotBlank]
     private $cantidad;
 
-    /** @ODM\Field(type="float") */
-    private $precio_unitario = [];
+    #[ODM\Field(type: "float")]
+    #[Assert\NotBlank]
+    private $precio_unitario;
 
-    /** @ODM\Field(type="string") */
+    #[ODM\Field(type: "string")]
+    #[Assert\NotBlank]
     private $nombre_producto;
 
     /**
@@ -33,9 +38,10 @@ class User
     /**
      * @param mixed $user_id
      */
-    public function setUserId($user_id): void
+    public function setUserId($user_id): Pedido
     {
         $this->user_id = $user_id;
+        return $this;
     }
 
     /**
@@ -49,15 +55,16 @@ class User
     /**
      * @param mixed $cantidad
      */
-    public function setCantidad($cantidad): void
+    public function setCantidad($cantidad): Pedido
     {
         $this->cantidad = $cantidad;
+        return $this;
     }
 
     /**
      * @return array
      */
-    public function getPrecioUnitario(): array
+    public function getPrecioUnitario(): int
     {
         return $this->precio_unitario;
     }
@@ -65,9 +72,10 @@ class User
     /**
      * @param array $precio_unitario
      */
-    public function setPrecioUnitario(array $precio_unitario): void
+    public function setPrecioUnitario($precio_unitario): Pedido
     {
         $this->precio_unitario = $precio_unitario;
+        return $this;
     }
 
     /**
@@ -81,8 +89,9 @@ class User
     /**
      * @param mixed $nombre_producto
      */
-    public function setNombreProducto($nombre_producto): void
+    public function setNombreProducto($nombre_producto): Pedido
     {
         $this->nombre_producto = $nombre_producto;
+        return $this;
     }
 }
