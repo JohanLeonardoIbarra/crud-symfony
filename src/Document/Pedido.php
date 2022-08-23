@@ -102,4 +102,8 @@ class Pedido
     {
         return $this->id;
     }
+
+    public function getTotal(): float{
+        return $this->precio_unitario*$this->cantidad;
+    }
 }
