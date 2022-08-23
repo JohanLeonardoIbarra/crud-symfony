@@ -8,7 +8,7 @@ http://localhost/usuario/new
     "nombre": "test2",
     "apellido": "test",
     "email": "test@email",
-    "sexo": "hombre"
+    "sexo": "Hombre/Mujer"
 }
 
 ### Busca un usuario por el id GET
@@ -20,7 +20,7 @@ http://localhost/usuario/{id}/edit
     "nombre": "test2",
     "apellido": "test",
     "email": "test@email",
-    "sexo": "hombre"
+    "sexo": "Hombre/Mujer"
 }
 
 ### Elimina un usuario DELETE
