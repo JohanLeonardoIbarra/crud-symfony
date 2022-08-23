@@ -94,4 +94,12 @@ class Pedido
         $this->nombre_producto = $nombre_producto;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

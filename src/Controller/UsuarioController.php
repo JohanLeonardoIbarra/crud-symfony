@@ -54,13 +54,17 @@ class UsuarioController extends AbstractController
         return $this->json($user);
     }
 
-    #[Route('/{id}', name: 'app_usuario_show', methods: ['GET'])]
+    #[Route('/{email}', name: 'app_usuario_show', methods: ['GET'])]
     public function show(Request $request,UsuarioRepository $userRepository): JsonResponse
     {
-        $id = $request->attributes->get("id");
-        $user = $userRepository->findOneBy(["id"=>$id]);
+        $email = $request->attributes->get("email");
+        $user = $userRepository->findOneBy(["email"=>$email]);
         if(!$user) return $this->json(["message"=>"Usuario no encontrado"]);
-        return $this->json($user);
+        return $this->json([
+            "usuario"=>$user->getFullName(),
+            "email"=>$user->getEmail(),
+            "sexo"=>$user->getSexoDetallado()
+        ]);
     }
 
     #[Route('/{id}/edit', name: 'app_usuario_edit', methods: ['PUT'])]

@@ -88,4 +88,13 @@ class Usuario
 
         return $this;
     }
+
+    public function getSexoDetallado(): string
+    {
+        return ($this->sexo == "Hombre")? "Soy un hombre": "Soy una mujer";
+    }
+
+    public function getFullName(): string{
+        return $this->getNombre()." ".$this->getApellido();
+    }
 }
