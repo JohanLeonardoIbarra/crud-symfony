@@ -18,10 +18,9 @@ class PedidoController extends AbstractController
      * Retorna los pedidos de un usuario, o deberia
     */
     #[Route('/pedido/list/{email}', name: 'app_pedido', methods: ["GET"])]
-    public function index(Request $request, UsuarioRepository $usuarioRepository, DocumentManager $documentManager): JsonResponse
+    public function index(string $email, UsuarioRepository $usuarioRepository, DocumentManager $documentManager): JsonResponse
     {
         try{
-            $email = $request->attributes->get("email");
             $user = $usuarioRepository->findOneBy(["email"=>$email]);
             if(!$user) return $this->json([ "message"=>"Usuario no registrado" ]);
             $pedidos = $documentManager->getRepository(Pedido::class)
@@ -65,9 +64,8 @@ class PedidoController extends AbstractController
     }
 
     #[Route("pedido/{id}", name:"app_find_pedido", methods: ["GET"])]
-    public function find(Request $request, DocumentManager $documentManager):JsonResponse
+    public function find(string $id, DocumentManager $documentManager):JsonResponse
     {
-        $id = $request->attributes->get("id");
         $pedido = $documentManager->getRepository(Pedido::class)
             ->findOneBy(["id"=>$id]);
         if(!$pedido) return $this->json(["message"=>"Pedido no encontrado"]);
@@ -75,9 +73,8 @@ class PedidoController extends AbstractController
     }
 
     #[Route("pedido/{id}/edit", name:"app_edit_pedido", methods: ["PUT"])]
-    public function edit(Request $request, DocumentManager $documentManager):JsonResponse
+    public function edit(string $id, Request $request, DocumentManager $documentManager):JsonResponse
     {
-        $id = $request->attributes->get("id");
         try{
             ["producto"=>$product, "cantidad"=>$quantity, "precio_unitario"=>$unitaryPrice] = $request->toArray();
         }catch (\Exception $error){
@@ -86,7 +83,7 @@ class PedidoController extends AbstractController
             ]);
         }
         $pedido = $documentManager->getRepository(Pedido::class)
-            ->findOneBy(["id"=>$id]);
+            ->find($id);
         if(!$pedido) return $this->json(["message"=>"Pedido no encontrado"]);
         $pedido->setNombreProducto($product)
             ->setCantidad($quantity)
@@ -100,11 +97,10 @@ class PedidoController extends AbstractController
     }
 
     #[Route("pedido/{id}", name: "app_delete_pedido", methods: ["DELETE"])]
-    public function delete(Request $request, DocumentManager $documentManager):JsonResponse
+    public function delete(string $id, DocumentManager $documentManager):JsonResponse
     {
-        $id = $request->attributes->get("id");
         $pedido = $documentManager->getRepository(Pedido::class)
-            ->findOneBy(["id"=>$id]);
+            ->find($id);
         if(!$pedido) return $this->json(["message"=>"Pedido no encontrado"]);
         $documentManager->remove($pedido);
         $documentManager->flush();

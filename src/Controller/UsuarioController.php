@@ -55,9 +55,8 @@ class UsuarioController extends AbstractController
     }
 
     #[Route('/{email}', name: 'app_usuario_show', methods: ['GET'])]
-    public function show(Request $request,UsuarioRepository $userRepository): JsonResponse
+    public function show(UsuarioRepository $userRepository, string $email): JsonResponse
     {
-        $email = $request->attributes->get("email");
         $user = $userRepository->findOneBy(["email"=>$email]);
         if(!$user) return $this->json(["message"=>"Usuario no encontrado"]);
         return $this->json([
@@ -69,10 +68,9 @@ class UsuarioController extends AbstractController
 
     #[Route('/{id}/edit', name: 'app_usuario_edit', methods: ['PUT'])]
     public function edit(
-        Request $request, UsuarioRepository $userRepository, ValidatorInterface $validator
+        int $id, Request $request, UsuarioRepository $userRepository, ValidatorInterface $validator
     ): JsonResponse
     {
-        $id = $request->attributes->get("id");
         try{
             ["nombre"=>$nombre, "apellido"=>$apellido, "email"=>$email, "sexo"=>$sexo] = $request->toArray();
         }catch (\Exception $error){
@@ -80,7 +78,7 @@ class UsuarioController extends AbstractController
                 "message"=>"Todos los campos son requeridos"
             ])->setStatusCode(400);
         }
-        $user = $userRepository->findOneBy(["id"=>$id]);
+        $user = $userRepository->find($id);
         if(!$user) return $this->json(["message"=>"Usuario no encontrado"]);
         $user->setNombre($nombre)
             ->setApellido($apellido)
@@ -97,10 +95,9 @@ class UsuarioController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_usuario_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Usuario $usuario, UsuarioRepository $usuarioRepository): JsonResponse
+    public function delete(int $id, Usuario $usuario, UsuarioRepository $usuarioRepository): JsonResponse
     {
-        $id = $request->attributes->get("id");
-        $user = $usuarioRepository->findOneBy(["id"=>$id]);
+        $user = $usuarioRepository->find($id);
         if(!$user) return $this->json(["message"=>"Usuario no encontrado"]);
         $usuarioRepository->remove($user, true);
         return $this->json([
