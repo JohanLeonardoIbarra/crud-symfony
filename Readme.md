@@ -12,9 +12,9 @@ http://localhost/usuario/new
 }
 
 ### Busca un usuario por el id GET
-http://localhost/usuario/id
+http://localhost/usuario/{email}
 ### Edita un usuario PUT
-http://localhost/usuario/id/edit
+http://localhost/usuario/{id}/edit
 
 {
     "nombre": "test2",
@@ -24,8 +24,24 @@ http://localhost/usuario/id/edit
 }
 
 ### Elimina un usuario DELETE
-http://localhost/usuario/id
+http://localhost/usuario/{id}
 
 # Rutas de pedido
 ### Busca los pedidos por usuario 
-http://localhost/pedido/email
+http://localhost/pedido/list/{email}
+### Crea un nuevo pedido
+http://localhost/pedido/new
+
+{
+    "email_usuario": "sd@test.com",
+    "producto": "Avion",
+    "cantidad": 3,
+    "precio_unitario": 50
+}
+
+### Busca un pedido en especifico
+http://localhost/pedido/{id}
+### Elimina un pedido
+http://localhost/pedido/{new}
+### Edita un pedido
+http://localhost/pedido/{id}/edit
