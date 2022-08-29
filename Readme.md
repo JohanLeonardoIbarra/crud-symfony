@@ -24,13 +24,13 @@ http://localhost/usuario/{id}/edit
 }
 
 ### Elimina un usuario DELETE
-http://localhost/usuario/{id}
+http://localhost/user/{id}
 
 # Rutas de pedido
 ### Busca los pedidos por usuario 
-http://localhost/pedido/list/{email}
+http://localhost/order/list/{email}
 ### Crea un nuevo pedido
-http://localhost/pedido/new
+http://localhost/order/new
 
 {
     "email_usuario": "sd@test.com",
@@ -40,8 +40,8 @@ http://localhost/pedido/new
 }
 
 ### Busca un pedido en especifico
-http://localhost/pedido/{id}
+http://localhost/order/{id}
 ### Elimina un pedido
-http://localhost/pedido/{new}
+http://localhost/order/{new}
 ### Edita un pedido
-http://localhost/pedido/{id}/edit
+http://localhost/order/{id}/edit
